@@ -10,17 +10,45 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
+var forms_1 = require('@angular/forms');
+var http_1 = require('@angular/http');
 var app_component_1 = require('./components/app/app.component');
 var header_component_1 = require('./components/header/header.component');
+var home_component_1 = require('./components/home/home.component');
+var footer_component_1 = require('./components/footer/footer.component');
+var trendy_component_1 = require('./components/trendy/trendy.component');
+var login_component_1 = require('./components/login/login.component');
+var register_component_1 = require('./components/register/register.component');
+var item_component_1 = require('./components/item/item.component');
+var new_product_component_1 = require('./components/new_product/new_product.component');
+var attribute_component_1 = require('./components/product_attributes/attribute.component');
+var user_service_1 = require('./components/shared/services/user.service');
+var product_service_1 = require('./components/shared/services/product.service');
+var app_routes_1 = require("./app.routes");
 var AppModule = (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         core_1.NgModule({
-            imports: [platform_browser_1.BrowserModule
+            imports: [platform_browser_1.BrowserModule,
+                forms_1.FormsModule,
+                forms_1.ReactiveFormsModule,
+                http_1.HttpModule,
+                app_routes_1.default
+            ],
+            providers: [user_service_1.UserService,
+                product_service_1.ProductService
             ],
             declarations: [app_component_1.AppComponent,
-                header_component_1.HeaderComponent
+                header_component_1.HeaderComponent,
+                home_component_1.HomeComponent,
+                footer_component_1.FooterComponent,
+                trendy_component_1.TrendyComponent,
+                login_component_1.LoginComponent,
+                register_component_1.RegisterComponent,
+                item_component_1.ItemComponent,
+                new_product_component_1.NewProductComponent,
+                attribute_component_1.AttributeComponent
             ],
             bootstrap: [app_component_1.AppComponent
             ]

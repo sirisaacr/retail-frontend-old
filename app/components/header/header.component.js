@@ -9,15 +9,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var user_service_1 = require('../shared/services/user.service');
 var HeaderComponent = (function () {
-    function HeaderComponent() {
+    function HeaderComponent(userService) {
+        this.userService = userService;
     }
+    HeaderComponent.prototype.isLogguedIn = function () {
+        var flag = this.userService.isLoggedIn();
+        return flag;
+    };
+    HeaderComponent.prototype.logout = function () {
+        this.userService.logout();
+    };
     HeaderComponent = __decorate([
         core_1.Component({
             selector: 'my-header',
             templateUrl: 'app/components/header/header.template.html'
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [user_service_1.UserService])
     ], HeaderComponent);
     return HeaderComponent;
 }());

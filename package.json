@@ -6,7 +6,7 @@
     "lite": "lite-server",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
-    "clean-js": "sudo find ./app -name \\*.js* -type f -not -name ./app/js/"
+    "clean-js": "sudo find ./app/components -name \\*.js* -type f -delete"
   },
   "dependencies": {
     "@angular/common": "~2.1.1",
@@ -21,6 +21,9 @@
     "angular-in-memory-web-api": "~0.1.13",
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
+    "localStorage": "^1.0.3",
+    "moment": "^2.15.2",
+    "ng2-datetime": "^1.2.1",
     "reflect-metadata": "^0.1.8",
     "rxjs": "5.0.0-beta.12",
     "systemjs": "0.19.39",

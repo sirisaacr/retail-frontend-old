@@ -1,0 +1,37 @@
+<div class="login">
+	<form novalidate [formGroup]="form" (ngSubmit)="register()">
+		<div class="col-md-6 col-md-offset-3 login-do">
+			<div class="login-mail">
+				<input type="text" formControlName="name" placeholder="Name" required>
+				<i class="glyphicon glyphicon-sunglasses"></i>
+			</div>
+			<div class="login-mail">
+				<input type="text" formControlName="lastname" placeholder="Last Name" required>
+				<i class="glyphicon glyphicon-sunglasses"></i>
+			</div>
+			<div class="login-mail">
+				<input type="text" formControlName="email" placeholder="Email" required>
+				<i class="glyphicon glyphicon-envelope"></i>
+			</div>
+			<div class="login-mail">
+				<input type="text" formControlName="username" placeholder="Username" required>
+				<i class="glyphicon glyphicon-user"></i>
+			</div>
+			<div class="login-mail">
+				<input type="password" formControlName="password" placeholder="Password" required>
+				<i class="glyphicon glyphicon-lock"></i>
+			</div>
+			<a class="news-letter " href="#">
+				<label class="checkbox1">
+						<input type="checkbox" formControlName="type"><i> </i>Want to be a seller?
+					</label>
+			</a>
+			<div class="text-center">
+				<label class="hvr-skew-backward">
+						<input [disabled]="loading" type="submit" value="Register">
+					</label>
+			</div>
+		</div>
+		<div class="clearfix"> </div>
+	</form>
+</div>
