@@ -16,6 +16,7 @@
 // ]
 
 export interface Product {
+    "_id": string,
     "name": string,
     "seller": string,
     "created": string,
@@ -26,6 +27,7 @@ export interface Product {
 }
 
 export interface ProductAttribute{
+    "_id": string,
     "price": number,
     "discount": number,
     "stock": number,
@@ -33,4 +35,9 @@ export interface ProductAttribute{
     "style": number,
     "color": string,
     "size": string
+}
+
+export interface ProductCategory{
+    "_id": string,
+    "name": string
 }

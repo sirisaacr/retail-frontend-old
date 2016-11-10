@@ -8,8 +8,23 @@ import { UserService }    from '../shared/services/user.service';
 })
 export class HeaderComponent { 
 
+  cart: any = {};
+
   constructor(public userService: UserService){
 
+  }
+
+  ngOnInit(){
+    this.getBasicCart();
+  }
+
+  getBasicCart(){
+    const sc = this;
+    this.userService.getBasicCart().subscribe((result) => {
+        if(result.success){
+          sc.cart = result.cart;
+        }
+    });
   }
 
   isLogguedIn(){

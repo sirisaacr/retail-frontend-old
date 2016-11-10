@@ -1,6 +1,6 @@
 <div class="container">
 	<form novalidate [formGroup]="formProduct" (ngSubmit)="createProduct()">
-		<div class="col-md-8 col-md-offset-2 login-do">
+		<div class="top-buffer col-md-8 col-md-offset-2 login-do">
 			<div class="login-mail">
 				<input type="text" formControlName="name" placeholder="Product Name" required>
 				<i class="glyphicon glyphicon-list-alt"></i>
@@ -12,44 +12,41 @@
 
 			<div formArrayName="attributes">
 				<div *ngFor="let attribute of formProduct.controls.attributes.controls; let i=index">
-					<!-- Angular assigns array index as group name by default 0, 1, 2, ... -->
 					<div [formGroupName]="i">
-						<!--street-->
 						<div>
 							<div class="attribute" [ngClass]="{'col-md-10': i>=1 }">
-								
 								<div class="row">
 									<div class="col-md-4">
-										<input type="text" formControlName="price" placeholder="Product Price" required>
 										<i class="glyphicon glyphicon-usd"></i>
+										<input type="text" formControlName="price" placeholder="Product Price" required>
 									</div>
 									<div class="col-md-4">
-										<input type="text" formControlName="discount" placeholder="Product Discount" required>
 										<i class="glyphicon glyphicon-fire"></i>
+										<input type="text" formControlName="discount" placeholder="Product Discount" required>
 									</div>
 									<div class="col-md-4">
-										<input type="text" formControlName="stock" placeholder="Product stock" required>
 										<i class="glyphicon glyphicon-plus"></i>
+										<input type="text" formControlName="stock" placeholder="Product stock" required>
 									</div>
 								</div>
 								<div class="row attributes_secondrow">
 									<div class="col-md-4">
-										<input type="text" formControlName="state" placeholder="Product state" required>
 										<i class="glyphicon glyphicon-tag"></i>
+										<input type="text" formControlName="state" placeholder="Product state" required>
 									</div>
 									<div class="col-md-4">
-										<input type="text" formControlName="color" placeholder="Product color" required>
 										<i class="glyphicon glyphicon-tint"></i>
+										<input type="text" formControlName="color" placeholder="Product color" required>
 									</div>
 									<div class="col-md-4">
-										<input type="text" formControlName="style" placeholder="Product style" required>
 										<i class="glyphicon glyphicon-user"></i>
+										<input type="text" formControlName="style" placeholder="Product style" required>
 									</div>
 								</div>
 								<div class="row attributes_secondrow">
 									<div class="col-md-4 col-md-offset-4">
-										<input type="text" formControlName="size" placeholder="Product size" required>
 										<i class="glyphicon glyphicon-resize-full"></i>
+										<input type="text" formControlName="size" placeholder="Product size" required>
 									</div>
 								</div>
 							</div>
@@ -68,71 +65,40 @@
 				</label>
 			</div>
 
+			<div class="top-buffer login-mail">
+				<div class="fileUpload hvr-skew-backward">
+					<span>Upload</span>
+					<input type="file" multiple class="upload" (change)="fileChange(input)" #input />
+				</div>
 
-
-
-			<!--<div *ngFor="let att of attributes;">
-				<div class="login-mail">
-					<div class="newattr">
-						<div class="row">
-							<my-product-attribute [attribute]="att"></my-product-attribute>
+				<div class="row">
+					<div *ngFor="let picture of pictures; let i=index">
+						<div class="col-md-4">
+							<img class="img-responsive" src='{{ picture }}' alt=""/>
 						</div>
 					</div>
 				</div>
-			</div>-->
+			</div>
 
-			<!--<form novalidate [formGroup]="formAttribute" (ngSubmit)="addAttribute()">
-				<div>
-					<div class="login-mail">
-						<div class="input-group">
-							<span class="input-group-addon">Price: </span>
-							<input type="text" formControlName="price" placeholder="Product Price" required>
-							<i class="glyphicon glyphicon-usd"></i>
-						</div>
-						<div class="input-group">
-							<span class="input-group-addon">Discount: </span>
-							<input type="text" formControlName="discount" placeholder="Product Discount" required>
-							<i class="glyphicon glyphicon-fire"></i>
-						</div>
-						<div class="input-group">
-							<span class="input-group-addon">Stock: </span>
-							<input type="text" formControlName="stock" placeholder="Product stock" required>
-							<i class="glyphicon glyphicon-plus"></i>
-						</div>
-						<div class="input-group">
-							<span class="input-group-addon">State: </span>
-							<input type="text" formControlName="state" placeholder="Product state" required>
-							<i class="glyphicon glyphicon-tag"></i>
-						</div>
-						<div class="input-group">
-							<span class="input-group-addon">Style: </span>
-							<input type="text" formControlName="style" placeholder="Product style" required>
-							<i class="glyphicon glyphicon-user"></i>
-						</div>
-						<div class="input-group">
-							<span class="input-group-addon">Color: </span>
-							<input type="text" formControlName="color" placeholder="Product color" required>
-							<i class="glyphicon glyphicon-tint"></i>
-						</div>
-						<div class="input-group">
-							<span class="input-group-addon">Size: </span>
-							<input type="text" formControlName="size" placeholder="Product size" required>
-							<i class="glyphicon glyphicon-resize-full"></i>
-						</div>
-
-						<div class="text-center">
-							<label class="hvr-skew-backward">
-								<input [disabled]="loading" type="submit" value="Add Attribute">
-							</label>
+			<div class="login-mail">
+				<div class="row">
+					<div *ngFor="let category of allcategories; let i=index">
+						<div class="col-md-4">
+							<a class="news-letter " href="#">
+								<label class="checkbox1">
+									<input type="checkbox" #cv (change)="categoryAddSubs(i,cv.checked)">
+									<i></i>{{category.name}}
+								</label>
+							</a>
 						</div>
 					</div>
 				</div>
-			</form>-->
-
+			</div>
+				
 			<div class="text-center">
 				<label class="hvr-skew-backward">
-						<input [disabled]="loading" type="submit" value="Register">
-					</label>
+					<input [disabled]="loading" type="submit" value="Register">
+				</label>
 			</div>
 
 		</div>

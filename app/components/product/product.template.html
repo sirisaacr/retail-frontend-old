@@ -1,0 +1,69 @@
+<div class="container">
+    <div class="top-buffer col-md-12">
+        <div class="col-md-5 grid">
+            <carousel [interval]="Interval" [noWrap]="noWrapSlides">
+                <slide *ngFor="let picture of pictures" [active]="picture.active">
+                    <img [src]="picture" class="img-responsive" style="margin:auto;">
+                </slide>
+            </carousel>
+        </div>
+        <div class="col-md-7 single-top-in">
+            <div class="span_2_of_a1 simpleCart_shelfItem">
+                <h3>{{product.name}}</h3>
+                <div class="price_single">
+                    <div *ngFor="let attribute of attributes; let i=index">
+                        <span *ngIf="i == 0" class="reducedfrom item_price">
+                            ${{attribute.price - (attribute.price*(attribute.discount/100))}}
+                        </span>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <h4 class="quick">Quick Overview:</h4>
+                <p class="quick_desc"> {{product.description}} </p>
+
+                <div *ngFor="let attribute of attributes; let i=index">
+                    <div class="attribute">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <i class="glyphicon glyphicon-usd"></i> {{attribute.price - (attribute.price*(attribute.discount/100))}}
+                            </div>
+                            <div class="col-md-4">
+                                <i class="glyphicon glyphicon-plus"></i> {{attribute.stock}}
+                            </div>
+                            <div class="col-md-4">
+                                <i class="glyphicon glyphicon-tag"></i> {{attribute.state}}
+                            </div>
+                        </div>
+                        <div class="row attributes_secondrow">
+                            <div class="col-md-4">
+                                <i class="glyphicon glyphicon-tint"></i> {{attribute.color}}
+                            </div>
+                            <div class="col-md-4">
+                                <i class="glyphicon glyphicon-user"></i> {{attribute.style}}
+                            </div>
+                            <div class="col-md-4">
+                                <i class="glyphicon glyphicon-resize-full"></i> {{attribute.size}}
+                            </div>
+                        </div>
+                        <div class="row attributes_secondrow">
+                            <div class="col-md-5 quantity">
+                                <div class="quantity-select">
+                                    <div (click)="decreaseQuantityOfTempBuy(i)" class="entry value-minus">&nbsp;</div>
+                                    <div class="entry value"><span>{{tempBuy[i].quantity}}</span></div>
+                                    <div (click)="increaseQuantityOfTempBuy(i)" class="entry value-plus active">&nbsp;</div>
+                                </div>
+                            </div>
+                            <div class="col-md-offset-3 col-md-4">
+                                <a (click)="addToCart(i)" class="add-to item_add hvr-skew-backward">Add to cart</a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+</div>

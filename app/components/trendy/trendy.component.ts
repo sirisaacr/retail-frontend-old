@@ -19,16 +19,16 @@ export class TrendyComponent {
 
     ngOnInit() {
       const sc = this;
-      let trending = sc.productService.trending()
-                            .subscribe((result) => {
-                                if (result.success) {
-                                  sc.trendyItems = result.trending; 
-                                }
-                                else {
-                                    // trending items failed
-                                    sc.error = result.msg;
-                                }
-                              });
+      sc.productService.trending()
+                        .subscribe((result) => {
+                            if (result.success) {
+                              sc.trendyItems = result.trending;
+                            }
+                            else {
+                                // trending items failed
+                                sc.error = result.msg;
+                            }
+                          });
     }
   
  }

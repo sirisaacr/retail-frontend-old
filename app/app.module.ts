@@ -3,6 +3,7 @@ import { BrowserModule }        from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule }           from '@angular/http';
 import { RouterModule }         from '@angular/router';
+import { CarouselModule }       from 'ng2-bootstrap';
 
 import { AppComponent }         from './components/app/app.component';
 import { HeaderComponent }      from './components/header/header.component';
@@ -13,7 +14,8 @@ import { LoginComponent }       from './components/login/login.component';
 import { RegisterComponent }    from './components/register/register.component';
 import { ItemComponent }        from './components/item/item.component';
 import { NewProductComponent }        from './components/new_product/new_product.component';
-import { AttributeComponent }        from './components/product_attributes/attribute.component';
+import { ProductComponent }        from './components/product/product.component';
+
 
 import { UserService }          from './components/shared/services/user.service';
 import { ProductService }       from './components/shared/services/product.service';
@@ -26,7 +28,8 @@ import routes from "./app.routes";
                     FormsModule,
                     ReactiveFormsModule,
                     HttpModule,
-                    routes
+                    routes,
+                    CarouselModule
                   ],
   providers     : [ UserService,
                     ProductService  
@@ -40,7 +43,7 @@ import routes from "./app.routes";
                     RegisterComponent,
                     ItemComponent,
                     NewProductComponent,
-                    AttributeComponent
+                    ProductComponent
                   ],
   bootstrap     : [ AppComponent 
                   ]

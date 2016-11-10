@@ -2,15 +2,15 @@
 	<div class=" mid-pop">
 		<div class="pro-img">
 			<img src="{{item.pictures[0]}}" class="img-responsive" alt="">
-			<div class="zoom-icon ">
-				<a class="picture" href="app/images/pc.jpg" rel="title" class="b-link-stripe b-animate-go  thickbox"><i class="glyphicon glyphicon-search icon "></i></a>
-				<a href="single.html"><i class="glyphicon glyphicon-menu-right icon"></i></a>
+			<div class="zoom-icon">
+				<a (click)="setCurrentProduct()" ><i class="glyphicon glyphicon-menu-right icon"></i></a>
 			</div>
+
 		</div>
 		<div class="mid-1">
 			<div class="women">
 				<div class="women-top">
-					<span>Women</span>
+					<span>{{item.style}}</span>
 					<h6><a href="single.html">{{item.name}}</a></h6>
 				</div>
 				<div class="img item_add">
