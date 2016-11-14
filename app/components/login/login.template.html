@@ -1,20 +1,25 @@
 <div class="container">
 	<div class="login">
+		<div class="text-center">
+			<img src="src/images/user.png">
+		</div>
 		<form novalidate [formGroup]="form" (ngSubmit)="login()" >
-			<div class="col-md-6 col-md-offset-3 login-do">
-				<div class="login-mail" >
-					<input type="text" placeholder="Email or Username" formControlName="username" />
+			<div class="top-buffer col-md-6 col-md-offset-3 login-do">
+				<div [attr.disabled]="loading ? true : null" class="login-mail" >
+					<input [attr.disabled]="loading ? true : null" type="text" placeholder="Email or Username" formControlName="username" />
 					<i class="glyphicon glyphicon-envelope"></i>
 				</div>
 
 				<div class="login-mail">
-					<input type="password" placeholder="Password" formControlName="password" />
+					<input [attr.disabled]="loading ? true : null" type="password" placeholder="Password" formControlName="password" />
 					<i class="glyphicon glyphicon-lock"></i>
 				</div>
 				<div *ngIf="error" class="alert alert-danger">{{error}}</div>
-				<label class="hvr-skew-backward">
-					<input [disabled]="loading" type="submit" value="login">
-				</label>
+				<div class="text-center">
+					<label *ngIf="!loading" class="hvr-skew-backward">
+						<input type="submit" value="login">
+					</label>
+				</div>
 			</div>
 		</form>
 	</div>

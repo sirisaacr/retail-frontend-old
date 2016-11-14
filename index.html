@@ -13,21 +13,16 @@
 
 	<script src="node_modules/zone.js/dist/zone.js"></script>
 	<script src="node_modules/reflect-metadata/Reflect.js"></script>
-	<script src="node_modules/systemjs/dist/system.src.js"></script>
-
-	<!-- 2. Configure SystemJS -->
-	<script src="systemjs.config.js"></script>
-	<script>
-      System.import('app').catch(function(err){ console.error(err); });
-    </script>
+	
+	<script src="src/js/bundle.js"></script>
 
 	<link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	
-	<link rel="stylesheet" href="app/css/merged-and-minified.css" type="text/css" media="screen" charset="utf-8" />
+	<link rel="stylesheet" href="src/css/merged-and-minified.css" type="text/css" media="screen" charset="utf-8" />
 	
 	<!--//theme-style-->
-	<script src="app/js/jquery.min.js"></script>
+	<script src="src/js/jquery.min.js"></script>
 </head>
 <!-- 3. Display the application -->
 

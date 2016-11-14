@@ -15,10 +15,12 @@ import { RegisterComponent }    from './components/register/register.component';
 import { ItemComponent }        from './components/item/item.component';
 import { NewProductComponent }        from './components/new_product/new_product.component';
 import { ProductComponent }        from './components/product/product.component';
+import { CartComponent }        from './components/cart/cart.component';
 
 
 import { UserService }          from './components/shared/services/user.service';
 import { ProductService }       from './components/shared/services/product.service';
+import { CartService }       from './components/shared/services/cart.service';
 
 
 import routes from "./app.routes";
@@ -32,7 +34,8 @@ import routes from "./app.routes";
                     CarouselModule
                   ],
   providers     : [ UserService,
-                    ProductService  
+                    ProductService,
+                    CartService  
                   ],
   declarations  : [ AppComponent, 
                     HeaderComponent,
@@ -43,7 +46,8 @@ import routes from "./app.routes";
                     RegisterComponent,
                     ItemComponent,
                     NewProductComponent,
-                    ProductComponent
+                    ProductComponent,
+                    CartComponent
                   ],
   bootstrap     : [ AppComponent 
                   ]

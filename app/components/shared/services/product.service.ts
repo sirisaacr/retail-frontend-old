@@ -3,69 +3,54 @@ import { Http, Headers, Response, RequestOptions }    from '@angular/http';
 import { Observable }                 from 'rxjs/Rx';
 import { Product }                    from '../models/product.model';
 
-
-import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class ProductService {
   private baseUrl: string = "http://ec2-35-161-254-250.us-west-2.compute.amazonaws.com:3005";
 
-  currentProduct: Product = {} as any;
+  trendyProducts: Product[] = [];
+  searchedProducts: Product[] = [];
 
   constructor(private http: Http) {
   }
 
-  setCurrentProduct(product: Product): Observable<any> {
-      const sc = this;
-      return Observable
-                .create(function (observer) {
-                        sc.currentProduct = product;
-                        if(sc.currentProduct._id){
-                            observer.next({success: true});
-                            observer.complete();
-                        }
-                        else{
-                            observer.next({success: false});
-                            observer.complete();
-                        }
-                    });
+  searchProduct(product_id){
+      for(var i=0; i < this.trendyProducts.length; i++){
+          let product = this.trendyProducts[i];
+          if(product._id == product_id){
+              return product;
+          }
+      }
+      return {"_id": ''};
   }
 
-  getCurrentProduct(): Observable<any>{
-        const sc = this;
-        return Observable
-            .create(function (observer) {
-                let product = sc.currentProduct;
-                if(sc.currentProduct._id){
-                    observer.next({success: true, product: product});
-                    observer.complete();
-                }
-                else{
-                    observer.next({success: false});
-                    observer.complete();
-                }
-            });
-  }
-
-  getProduct(product_id): Observable<any>{
-        const sc = this;
-        return this.http
-            .get(`${this.baseUrl}/products?item=${product_id}`)
-            .map((response: Response) => {
-                // 
-                let success = response.json() && response.json().success;
-                if (success) {
-                    let product = response.json() && response.json().product;
-                    return { success, product };
-                } else {
-                    // return false to indicate failed
-                    let msg = response.json() && response.json().msg;
-                    return { success, msg };
-                }
-            });
-  }
+    getProduct(product_id): Observable<any>{
+        const sc = this;   
+        let product = sc.searchProduct(product_id);
+        if(product._id != ''){
+            return Observable.of({success: true, product});
+        }
+        else{
+            return this.http
+                .get(`${this.baseUrl}/products?item=${product_id}`)
+                .map((response: Response) => {
+                    // 
+                    let success = response.json() && response.json().success;
+                    if (success) {
+                        let product = response.json() && response.json().product;   
+                        return { success, product };
+                    } else {
+                        // return false to indicate failed
+                        let msg = response.json() && response.json().msg;
+                        return { success, msg };
+                    }
+                });
+        }
+    }
 
   trending(): Observable<any> {
+    const sc = this;
     return this.http
             .get(`${this.baseUrl}/products/trendy`)
             .map((response: Response) => {
@@ -73,7 +58,8 @@ export class ProductService {
                 let success = response.json() && response.json().success;
                 if (success) {
                     let trending = response.json() && response.json().products;
-                    return { success, trending };
+                    sc.trendyProducts = trending;
+                    return { success, trending: sc.trendyProducts };
                 } else {
                     // return false to indicate failed
                     let msg = response.json() && response.json().msg;

@@ -35,12 +35,7 @@ export class ItemComponent {
     this.item.attributes = attributes;
 
     let attr = attributes[0];
-    if(attr.discount > 0){
-      this.finalPrice = attr.price - attr.price * (attr.discount / 100);
-    }
-    else{
-      this.finalPrice = attributes[0].price
-    }
+    this.finalPrice = attr.price - attr.price * (attr.discount / 100);
   }
 
   sale(){
@@ -48,14 +43,9 @@ export class ItemComponent {
     return (attr.discount > 0);
   }
 
-  setCurrentProduct(){
+  redirectToProduct(){
       const sc = this;
-      this.productService.setCurrentProduct(this.item)
-                         .subscribe((result) => {
-                            if (result.success) {
-                              sc.router.navigate(['/product', sc.item._id]); ; 
-                            }
-                         });
+      sc.router.navigate(['/product', sc.item._id]); 
   }
 
 

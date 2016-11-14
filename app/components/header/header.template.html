@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="head">
 			<div class=" logo">
-				<a href="/"><img src="./app/images/logo.png" alt=""></a>
+				<a (click)="redirectToHome()"><img src="./src/images/logo.png" alt=""></a>
 			</div>
 		</div>
 	</div>
@@ -10,12 +10,12 @@
 		<div class="container">
 			<div class="col-sm-5 col-md-offset-2  header-login">
 				<ul>
-					<li *ngIf="isLogguedIn()"><a href="javascript:;" (click)="logout()">Profile</a></li>
-					<li *ngIf="isLogguedIn()"><a href="new/product">Sell products</a></li>
-					<li *ngIf="isLogguedIn()"><a href="javascript:;" (click)="logout()">Logout</a></li>
+					<li *ngIf="isLoggedIn()"><a (click)="redirectToHome()">Profile</a></li>
+					<li *ngIf="isLoggedIn()"><a (click)="redirectToNewProduct()">Sell products</a></li>
+					<li *ngIf="isLoggedIn()"><a (click)="logout()">Logout</a></li>
 
-					<li *ngIf="!isLogguedIn()"><a href="login">Login</a></li>
-					<li *ngIf="!isLogguedIn()"><a href="register">Register</a></li>
+					<li *ngIf="!isLoggedIn()"><a (click)="redirectToLogin()">Login</a></li>
+					<li *ngIf="!isLoggedIn()"><a (click)="redirectToRegister()">Register</a></li>
 				</ul>
 			</div>
 
@@ -51,7 +51,7 @@
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
 						<ul class="nav navbar-nav nav_1">
-							<li><a class="color" href="/">Home</a></li>
+							<li><a class="color" (click)="redirectToHome()">Home</a></li>
 						</ul>
 					</div>
 					<!-- /.navbar-collapse -->
@@ -67,11 +67,15 @@
 					</li>
 				</ul>
 				<div class="cart box_1">
-					<a href="checkout.html">
+					<a (click)="redirectToCart()">
 						<h3>
 							<div class="total">
-								<span class="simpleCart_total">{{cart.size}} items</span></div>
-							<img src="./app/images/cart.png" alt="" /></h3>
+								<span *ngIf="validation()" class="simpleCart_total">{{cart.source._value.length}} items</span>
+								<span *ngIf="!isLoggedIn()" class="simpleCart_total">0 items</span>
+
+								
+							</div>
+							<img src="./src/images/cart.png" alt="" /></h3>
 					</a>
 				</div>
 				<div class="clearfix"> </div>

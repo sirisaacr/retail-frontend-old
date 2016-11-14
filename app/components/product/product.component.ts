@@ -3,6 +3,8 @@ import {Component} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { ProductService }     from '../shared/services/product.service';
+import { UserService }     from '../shared/services/user.service';
+import { CartService }     from '../shared/services/cart.service';
 
 import { Product, ProductAttribute }            from '../shared/models/product.model';
 
@@ -23,7 +25,10 @@ export class ProductComponent {
     product_id: string;
 
 
-    constructor(private route: ActivatedRoute, private productService: ProductService) {
+    constructor(private route: ActivatedRoute, 
+                private productService: ProductService,
+                private cartService: CartService,
+                private userService: UserService) {
         this.route.params.subscribe(params => {
             this.product_id = params['id'];
         });
@@ -31,18 +36,12 @@ export class ProductComponent {
 
     ngOnInit(){
         const sc = this;
-        this.productService.getCurrentProduct()
+        this.productService.getProduct(sc.product_id)
                     .subscribe((result) => {
                         if (result.success) {
                             sc.initVariables(result.product);
                         }
                         else{
-                            this.productService.getProduct(sc.product_id)
-                                .subscribe((result) => {
-                                    if(result.success){
-                                        sc.initVariables(result.product[0]);
-                                    }
-                                });
                         }
                     });
     }
@@ -60,6 +59,22 @@ export class ProductComponent {
             };
             sc.tempBuy.push(tempAttribute);
         }
+
+        const attributes = sc.attributes;
+        attributes.sort(function(a, b){
+            let priceA = a.price,
+                discoA = a.discount,
+
+                priceB = b.price,
+                discoB = b.discount;
+
+            let finalA = priceA - (priceA * (discoA /100)),
+                finalB = priceB - (priceB * (discoB /100));
+            return finalA - finalB;
+        });
+
+        sc.attributes = attributes;
+
     }
 
     increaseQuantityOfTempBuy(index){
@@ -76,6 +91,30 @@ export class ProductComponent {
 
         if(0 < actualQuantity){
             this.tempBuy[index].quantity = actualQuantity - 1;
+        }
+    }
+
+    addToCart(index){
+        if(this.userService.isLoggedIn()){      
+            let product = this.tempBuy[index];
+            let purchase = {
+                cart    : this.cartService.getCartId(),
+                product : {
+                            product     : this.product_id,
+                            attribute   : product.attribute_id,
+                            quantity    : product.quantity
+                            }
+            };
+            this.cartService.addToCart(purchase);
+                            // .subscribe((result) => {
+                            //     if(result.success){
+                            //         console.log("Added to cart");
+                            //     }
+                            //     else{
+                            //         console.log("err 1 ");
+                            //     }
+                            // });
+            
         }
     }
 

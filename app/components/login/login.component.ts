@@ -25,10 +25,14 @@ export class LoginComponent {
   }
 
   ngOnInit() {
-    if(this.userService.isLoggedIn())
-    {
-        this.router.navigate(['/']);
-    }
+    // const sc = this;
+    // this.userService.isLoggedIn()
+    //                 .subscribe((result) => {
+    //                     if(result.success){
+    //                         this.router.navigate(['/']);
+    //                     }
+    //                 });
+
   }
 
   login() {
