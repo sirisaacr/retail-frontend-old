@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container container-spacer">
     <div class="check-out">
         <div class="bs-example4" data-example-id="simple-responsive-table">
             <div class="table-responsive">
@@ -10,20 +10,20 @@
                         <th>Subtotal</th>
                     </tr>
                     
-                    <tr class="cart-header" *ngFor="let item of cart.source._value">
-                        <td class="ring-in">
-                            <a href="single.html" class="at-in"><img src="{{item.product.pictures[0]}}" class="img-responsive" alt=""></a>
+                    <tr class="cart-header" *ngFor="let item of cart.source._value; let i=index">
+                            <td [ngClass]="{'disabled' : !item.attribute.active}" class="ring-in">
+                            <a routerLink="/product/{{item.product._id}}" class="at-in"><img src="{{item.product.pictures[0]}}" class="img-responsive" alt=""></a>
                             <div class="sed">
-                                <h5><a href="single.html"> {{item.product.name}} </a></h5>
+                                <h5><a routerLink="/product/{{item.product._id}}"> {{item.product.name}} </a></h5>
                                 <p> {{item.attribute.state}} {{item.attribute.color}} {{item.attribute.size}} for {{item.attribute.style }} </p>
 
                             </div>
                             <div class="clearfix"> </div>
-                        </td>
-                        <td> ${{(item.attribute.price-item.attribute.price*item.attribute.discount/100)}} </td>
-                        <td> {{item.quantity}} </td>
-                        <td class="item_price"> ${{item.quantity*(item.attribute.price-item.attribute.price*item.attribute.discount/100)}} </td>
-                        <td class="add-check"><a class="item_add hvr-skew-backward" href="#">Remove from Cart</a></td>
+                            </td>
+                            <td [ngClass]="{'disabled' : !item.attribute.active}"> ${{(item.attribute.price-item.attribute.price*item.attribute.discount/100)}} </td>
+                            <td [ngClass]="{'disabled' : !item.attribute.active}"> {{item.quantity}} </td>
+                            <td [ngClass]="{'disabled' : !item.attribute.active}" class="item_price"> ${{item.quantity*(item.attribute.price-item.attribute.price*item.attribute.discount/100)}} </td>
+                            <td class="add-check"><a class="item_add hvr-skew-backward" (click)="removeFromCart(i)">Remove from Cart</a></td>
                     </tr>
 
                     <tr>
@@ -35,8 +35,9 @@
                 </table>
             </div>
         </div>
-        <div class="produced">
-            <a href="single.html" class="hvr-skew-backward">Produced To Buy</a>
+        <div [ngClass]="{'disabled': loading}" class="text-center produced">
+            <a *ngIf="!loading" (click)="proceedToBuy()" class="hvr-skew-backward">Proceed To Buy</a>
+            <div *ngIf="loading" class="loader"></div>
         </div>
     </div>
 </div>

@@ -12,20 +12,26 @@ var paths =   {
 var map = {
     // Mapping the css loader
       css: 'node_modules/systemjs-plugin-css/css.js',
-      // Mapping the src folder
-      app: 'src/js',
+      // Mapping the src folder of develompent
+      app: 'app',
+      //app for deployment in prod
+      //app: 'src/js',
       // angular bundles
       'moment': 'npm:moment/moment.js',
       'ng2-bootstrap': 'npm:ng2-bootstrap/bundles/ng2-bootstrap.umd.js',
       '@angular': 'npm:@angular',
+      '@angular2-material': 'npm:@angular2-material',
+      'angular-disable-all': 'npm:@angular-disable-all/dist/angular-disable-all.min.js',
       // other libraries
       'localStorage': 'npm:localStorage/lib/localStorage.js',
       'rxjs':                      'npm:rxjs',
       'angular-in-memory-web-api': 'npm:angular-in-memory-web-api',
+      'angular-svg-round-progressbar': 'npm:angular-svg-round-progressbar/build/roundProgress.min.js',
+      "materialize-css": "npm:/materialize-css"
 };
 // packages tells the System loader how to load when no filename and/or no extension
 var packages = {
-    app: {
+      app: {
         main: './main.js',
         defaultExtension: 'js'
       },

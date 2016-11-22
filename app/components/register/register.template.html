@@ -1,6 +1,6 @@
 <div class="login">
 	<form novalidate [formGroup]="form" (ngSubmit)="register()">
-		<div class="col-md-6 col-md-offset-3 login-do">
+		<div [ngClass]="{'disabled': loading}" class="col-md-6 col-md-offset-3 login-do">
 			<div class="login-mail">
 				<input type="text" formControlName="name" placeholder="Name" required>
 				<i class="glyphicon glyphicon-sunglasses"></i>
@@ -26,10 +26,11 @@
 					<input type="checkbox" formControlName="type"><i> </i>Want to be a seller?
 				</label>
 			</a>
-			<div class="text-center">
-				<label class="hvr-skew-backward">
-						<input [disabled]="loading" type="submit" value="Register">
+			<div class="text-center" layout-align="center center">
+				<label *ngIf="!loading" class="hvr-skew-backward">
+						<input type="submit" value="Register">
 					</label>
+				<div *ngIf="loading" class="loader"></div>
 			</div>
 		</div>
 		<div class="clearfix"> </div>

@@ -1,0 +1,114 @@
+<div class="container container-spacer container-spacer-top">
+	<form *ngIf="formProduct" novalidate [formGroup]="formProduct" (ngSubmit)="saveProduct()">
+		<div [ngClass]="{'disabled': loading}" class="col-md-8 col-md-offset-2 login-do">
+			<div [ngClass]="{'attribute-err': !formProduct.controls.name.valid}" class="login-mail">
+				<input type="text" formControlName="name" placeholder="Product Name" required>
+				<i class="glyphicon glyphicon-list-alt"></i>
+			</div>
+			<div [ngClass]="{'attribute-err': !formProduct.controls.description.valid}" class="login-mail">
+				<textarea rows="4" formControlName="description" placeholder="Product Description" required></textarea>
+				<i class="glyphicon glyphicon-comment"></i>
+			</div>
+
+			<div formArrayName="attributes">
+				<div *ngFor="let attribute of formProduct.controls.attributes.controls; let i=index">
+					<div [formGroupName]="i">
+						<div>
+							<div class="attribute" [ngClass]="{'attribute-err': !attribute.valid, 'col-md-10': i>=1, 'disabled' : !attribute.value.active, 'attribute-nb': i>=1 }">
+								<div class="row">
+									<div class="col-md-4">
+										<i class="glyphicon glyphicon-usd"></i>
+										<input type="text" formControlName="price" placeholder="Product Price" required>
+									</div>
+									<div class="col-md-4">
+										<i class="glyphicon glyphicon-fire"></i>
+										<input type="text" formControlName="discount" placeholder="Product Discount" required>
+									</div>
+									<div class="col-md-4">
+										<i class="glyphicon glyphicon-plus"></i>
+										<input type="text" formControlName="stock" placeholder="Product stock" required>
+									</div>
+								</div>
+								<div class="row attributes_secondrow">
+									<div class="col-md-4">
+										<i class="glyphicon glyphicon-tag"></i>
+										<input type="text" formControlName="state" placeholder="Product state" required>
+									</div>
+									<div class="col-md-4">
+										<i class="glyphicon glyphicon-tint"></i>
+										<input type="text" formControlName="color" placeholder="Product color" required>
+									</div>
+									<div class="col-md-4">
+										<i class="glyphicon glyphicon-user"></i>
+										<input type="text" formControlName="style" placeholder="Product style" required>
+									</div>
+								</div>
+								<div class="row attributes_secondrow">
+									<div class="col-md-4 col-md-offset-4">
+										<i class="glyphicon glyphicon-resize-full"></i>
+										<input type="text" formControlName="size" placeholder="Product size" required>
+									</div>
+								</div>
+							</div>
+							<div *ngIf="i >= 1" class="col-md-2 attribute-status" [ngClass]="{'attribute-err-secondary': !attribute.valid}">
+								<label class="hvr-skew-backward" (click)="deactivateAttribute(i)">
+									<span class="glyphicon" [ngClass]="{'glyphicon-remove' : attribute.value.active, 'glyphicon-ok': !attribute.value.active }">
+									</span>
+								</label>
+								<label *ngIf="!attribute.value._id" class="hvr-skew-backward" (click)="removeAttribute(i)">
+									<span class="glyphicon glyphicon-trash">
+									</span>
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="text-center container-spacer">
+				<label class="hvr-skew-backward">
+					<input type="button" (click)="addAttribute()" value="New Attribute">
+				</label>
+			</div>
+
+			<div [ngClass]="{'attribute-err': pictures.length==0}" class="login-mail">
+				<div class="row">
+					<div *ngFor="let picture of pictures; let i=index">
+						<div class="col-md-4">
+							<img class="img-responsive" src='{{ picture }}' alt=""/>
+						</div>
+					</div>
+				</div>
+				<div class="row text-center">
+					<label class="hvr-skew-backward">
+						<input type="file" multiple class="upload" (change)="fileChange(input)" #input />
+						Upload pictures
+					</label>
+				</div>
+			</div>
+
+			<div [ngClass]="{'attribute-err': categories.length==0}" class="login-mail">
+				<div class="row">
+					<div *ngFor="let category of allcategories.source._value; let i=index">
+						<div class="col-md-4">
+							<a class="news-letter">
+								<label class="checkbox1">
+									<input type="checkbox" [checked]="selected(category._id)" #cv (change)="categoryAddSubs(i,cv.checked)">
+									<i></i>{{category.name}}
+								</label>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>				
+			<div *ngIf="formProduct.valid&&pictures.length&&categories.length" class="text-center">
+				<label *ngIf="!loading" class="hvr-skew-backward">
+					<input type="submit" value="Update">
+				</label>
+				<div *ngIf="loading" class="loader"></div>
+			</div>
+
+		</div>
+		<div class="clearfix"> </div>
+	</form>
+</div>

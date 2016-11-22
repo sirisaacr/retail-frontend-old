@@ -1,6 +1,6 @@
 import { Component }      from '@angular/core';
 import { Router }         from '@angular/router';
-import { FormBuilder, FormGroup, FormArray }      from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators }      from '@angular/forms';
 
 import { Product, ProductAttribute, ProductCategory }            from '../shared/models/product.model';
 
@@ -13,11 +13,12 @@ import { UserService }    from '../shared/services/user.service';
 })
 export class NewProductComponent {
 
+  loading = false;
   pictures: string[] = [];
   formProduct: FormGroup;
   product: any;
-  attribute: ProductAttribute = {} as any;
-  allcategories: ProductCategory[] = [];
+  attribute: any;
+  allcategories: any;
   categories: string[] = [];
 
   constructor(private router: Router, 
@@ -25,44 +26,33 @@ export class NewProductComponent {
               private productService: ProductService,
               private userService: UserService){
       this.product = {  
-            "name": '',
-            "seller": '',
-            "created": '',
+            "name": ['', Validators.required],
             "attributes": this.pfb.array(
               [
                 this.initAttribute()
               ]
             ),
-            "description": ''
+            "description": ['', Validators.required],
       };
       this.formProduct = this.pfb.group(this.product);
   }
 
   ngOnInit(){
       const sc = this;
-      let cal = this.productService.categoriesList().subscribe((result) => {
-        if (result.success) {
-          sc.allcategories = result.categories; 
-        }
-      });
-
-      // this.userService.canIbe().subscribe((result) => {
-      //   if (result.success) {
-      //     sc.allcategories = result.categories; 
-      //   }
-      // });
+      this.allcategories = this.productService.categories;
+      this.productService.getCategories();
   }
 
   initAttribute() {
       this.attribute = {
           "_id": '',
-          "price": null,
-          "discount": null,
-          "stock": null,
-          "state": null,
-          "style": null,
-          "color": '',
-          "size": ''
+          "price": [null, Validators.compose([Validators.required, Validators.pattern("[1-9][0-9]*(\.[0-9]+)*")])],
+          "discount": [null, Validators.compose([Validators.required, Validators.pattern("[0-9]+")])],
+          "stock": [null, Validators.compose([Validators.required, Validators.pattern("[0-9]+")])],
+          "state": [null, Validators.required],
+          "style": [null, Validators.required],
+          "color": ['', Validators.required],
+          "size": ['', Validators.required]
       };
       return this.pfb.group(this.attribute);
   }
@@ -78,7 +68,7 @@ export class NewProductComponent {
   }
 
   categoryAddSubs(index, flag){
-    const id = this.allcategories[index]._id;
+    const id = this.allcategories.source._value[index]._id;
     if(flag){
       this.categories.push(id);
     }
@@ -94,20 +84,19 @@ export class NewProductComponent {
   }
 
   createProduct(){
+    this.loading = true;
     const sc = this;
     let product = this.formProduct.value;
     product.pictures = this.pictures;
     product.categories = this.categories;
-    this.productService.createProduct(product).subscribe((result) => {
-      if (result.success) {
-        sc.router.navigate(['/']); 
-      }
-      else {
-          // login failed
-          let error = result.msg;
-          console.log(error);
-      }
-    });
+    this.productService.createProduct(product);
+    
+    setTimeout(() => 
+    {
+        this.loading = false;
+        this.router.navigate(['/my_products']);
+    },
+    3000);
   }
 
   fileChange(input){
@@ -132,7 +121,7 @@ export class NewProductComponent {
       }
   }
 
-  resize(img, MAX_WIDTH:number = 400, MAX_HEIGHT:number = 400){
+  resize(img, MAX_WIDTH:number = 300, MAX_HEIGHT:number = 300){
       var canvas = document.createElement("canvas");
 
       var width = img.width;

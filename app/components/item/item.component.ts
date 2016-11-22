@@ -12,10 +12,11 @@ import { Product }            from '../shared/models/product.model';
 })
 export class ItemComponent { 
 
-  @Input() item: Product;
+  @Input() item: any;
   finalPrice: number;
 
-  constructor(private router: Router, private productService: ProductService){}
+  constructor(private router: Router, private productService: ProductService){
+  }
 
   ngOnInit()
   {
@@ -41,11 +42,6 @@ export class ItemComponent {
   sale(){
     let attr = this.item.attributes[0];
     return (attr.discount > 0);
-  }
-
-  redirectToProduct(){
-      const sc = this;
-      sc.router.navigate(['/product', sc.item._id]); 
   }
 
 

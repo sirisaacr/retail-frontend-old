@@ -1,0 +1,35 @@
+.login-mail textarea {
+  border: 0 none #FFF;
+  overflow: hidden;
+  outline: none;
+  resize: none;
+  width: 92.5%; }
+
+.attribute input[type="text"] {
+  border: none;
+  outline: none;
+  font-size: 0.9em;
+  color: #999;
+  width: 85%; }
+
+.attribute i {
+  color: #F67777;
+  font-size: 1em; }
+
+.hvr-skew-backward input[type="button"] {
+  background-color: transparent;
+  border: none; }
+
+.hvr-skew-backward input[type="file"] {
+  display: none; }
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.4; }
+
+.attribute-status {
+  border: 1px solid #E9E9E9;
+  border-left: 1px solid #FFFFFF;
+  margin-bottom: 2em;
+  padding: 0.5em 1em;
+  min-height: 5.4375em; }

@@ -1,12 +1,12 @@
-<div class="container">
+<div class="container container-spacer-top container-spacer">
 	<form novalidate [formGroup]="formProduct" (ngSubmit)="createProduct()">
-		<div class="top-buffer col-md-8 col-md-offset-2 login-do">
-			<div class="login-mail">
+		<div [ngClass]="{'disabled': loading}" class="col-md-8 col-md-offset-2 login-do">
+			<div [ngClass]="{'attribute-err': !formProduct.controls.name.valid}" class="login-mail">
 				<input type="text" formControlName="name" placeholder="Product Name" required>
 				<i class="glyphicon glyphicon-list-alt"></i>
 			</div>
-			<div class="login-mail">
-				<textarea rows="4" cols="56" formControlName="description" placeholder="Product Description" required></textarea>
+			<div [ngClass]="{'attribute-err': !formProduct.controls.description.valid}" class="login-mail">
+				<textarea rows="4" formControlName="description" placeholder="Product Description" required></textarea>
 				<i class="glyphicon glyphicon-comment"></i>
 			</div>
 
@@ -14,7 +14,7 @@
 				<div *ngFor="let attribute of formProduct.controls.attributes.controls; let i=index">
 					<div [formGroupName]="i">
 						<div>
-							<div class="attribute" [ngClass]="{'col-md-10': i>=1 }">
+							<div class="attribute" [ngClass]="{'attribute-err': !attribute.valid, 'col-md-10': i>=1, 'disabled' : !attribute.value.active&&i>0, 'attribute-nb': i>=1 }">
 								<div class="row">
 									<div class="col-md-4">
 										<i class="glyphicon glyphicon-usd"></i>
@@ -59,18 +59,13 @@
 				</div>
 			</div>
 
-			<div class="text-center">
+			<div class="text-center container-spacer">
 				<label class="hvr-skew-backward">
 					<input type="button" (click)="addAttribute()" value="New Attribute">
 				</label>
 			</div>
 
-			<div class="top-buffer login-mail">
-				<div class="fileUpload hvr-skew-backward">
-					<span>Upload</span>
-					<input type="file" multiple class="upload" (change)="fileChange(input)" #input />
-				</div>
-
+			<div [ngClass]="{'attribute-err': pictures.length==0}" class="top-buffer login-mail">
 				<div class="row">
 					<div *ngFor="let picture of pictures; let i=index">
 						<div class="col-md-4">
@@ -78,13 +73,19 @@
 						</div>
 					</div>
 				</div>
+				<div class="row text-center">
+					<label class="hvr-skew-backward">
+						<input type="file" multiple class="upload" (change)="fileChange(input)" #input />
+						Upload pictures
+					</label>
+				</div>
 			</div>
 
-			<div class="login-mail">
+			<div [ngClass]="{'attribute-err': categories.length==0}" class="login-mail">
 				<div class="row">
-					<div *ngFor="let category of allcategories; let i=index">
+					<div *ngFor="let category of allcategories.source._value; let i=index">
 						<div class="col-md-4">
-							<a class="news-letter " href="#">
+							<a class="news-letter">
 								<label class="checkbox1">
 									<input type="checkbox" #cv (change)="categoryAddSubs(i,cv.checked)">
 									<i></i>{{category.name}}
@@ -94,11 +95,12 @@
 					</div>
 				</div>
 			</div>
-				
-			<div class="text-center">
-				<label class="hvr-skew-backward">
-					<input [disabled]="loading" type="submit" value="Register">
+	
+			<div *ngIf="formProduct.valid&&pictures.length&&categories.length" class="text-center">
+				<label *ngIf="!loading" class="hvr-skew-backward">
+					<input type="submit" value="Create">
 				</label>
+				<div *ngIf="loading" class="loader"></div>
 			</div>
 
 		</div>

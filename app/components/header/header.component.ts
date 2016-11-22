@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { Router }         from '@angular/router';
+import { Router, NavigationExtras }         from '@angular/router';
 
 import { UserService }    from '../shared/services/user.service';
 import { CartService }    from '../shared/services/cart.service';
+import { ProductService }    from '../shared/services/product.service';
 
 @Component({
   selector      : 'my-header',
@@ -12,20 +13,33 @@ export class HeaderComponent {
 
   flag: boolean = true;
 
+  search: string;
+  searchCategory: string;
+
   cart:any;
+
+  categories: any;
 
   constructor(public router: Router, 
               public cartService: CartService,
+              public productService: ProductService,
               public userService: UserService){
-
+        this.search = '';
+        this.searchCategory = '';
   }
 
   ngOnInit(){
-    
+      this.categories = this.productService.categories;
+      this.productService.getCategories();
   }
 
   isLoggedIn(){
     const flag = this.userService.isLoggedIn();
+    return flag;
+  }
+
+  isSeller(){
+    const flag = this.userService.isSeller();
     return flag;
   }
 
@@ -41,50 +55,21 @@ export class HeaderComponent {
     }
   }
 
-  // getCartSize(){
-  //   this.cartService.getCart()
-  //                   .subscribe((response) =>{
-  //                       let success = response.json() && response.json().success;
-  //                       if (success) {
-  //                           this.cartSize = response.json().cart.products.length;
-  //                       } 
-  //                       else {
-  //                           // return false to indicate failed
-  //                           let msg = response.json() && response.json().msg;
-  //                       }
-  //                   });
-  // }
-
   logout(){
     this.flag = true;
     this.userService.logout();
     this.cartService.logout();
-    this.redirectToHome();
   }
 
-  redirectToLogin(){
-    if(this.isLoggedIn()){
-      this.redirectToHome();
+  searchProducts(){
+    this.productService.searchProducts(this.search, this.searchCategory);
+    if(this.searchCategory != ''){
+      this.router.navigate([ '/search'], { queryParams: {search: this.search, category: this.searchCategory}});      
     }
     else{
-      this.router.navigate(['/login']);
+      this.router.navigate([ '/search'], { queryParams: {search: this.search}});
     }
   }
 
-  redirectToRegister(){
-    this.router.navigate(['register']);
-  }
-
-  redirectToNewProduct(){
-    this.router.navigate(['new', 'product']);
-  }
-
-  redirectToHome(){
-    this.router.navigate(['/']);
-  }
-
-  redirectToCart(){
-    this.router.navigate(['cart']);
-  }
 
 }

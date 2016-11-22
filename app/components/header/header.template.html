@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="head">
 			<div class=" logo">
-				<a (click)="redirectToHome()"><img src="./src/images/logo.png" alt=""></a>
+				<a routerLink="/"><img src="./src/images/logo.png" alt=""></a>
 			</div>
 		</div>
 	</div>
@@ -10,12 +10,13 @@
 		<div class="container">
 			<div class="col-sm-5 col-md-offset-2  header-login">
 				<ul>
-					<li *ngIf="isLoggedIn()"><a (click)="redirectToHome()">Profile</a></li>
-					<li *ngIf="isLoggedIn()"><a (click)="redirectToNewProduct()">Sell products</a></li>
-					<li *ngIf="isLoggedIn()"><a (click)="logout()">Logout</a></li>
+					<li *ngIf="isLoggedIn()"><a routerLink="/">Profile</a></li>
+					<li *ngIf="isLoggedIn() && isSeller()"><a routerLink="/new/product">Sell products</a></li>
+					<li *ngIf="isLoggedIn() && isSeller()"><a routerLink="/my_products">My products</a></li>
+					<li *ngIf="isLoggedIn()"><a routerLink="/" (click)="logout()">Logout</a></li>
 
-					<li *ngIf="!isLoggedIn()"><a (click)="redirectToLogin()">Login</a></li>
-					<li *ngIf="!isLoggedIn()"><a (click)="redirectToRegister()">Register</a></li>
+					<li *ngIf="!isLoggedIn()"><a routerLink="/login">Login</a></li>
+					<li *ngIf="!isLoggedIn()"><a routerLink="/register">Register</a></li>
 				</ul>
 			</div>
 
@@ -35,7 +36,7 @@
 
 		<div class="head-top">
 
-			<div class="col-sm-5 col-md-offset-2 h_menu4">
+			<div class="col-sm-12 col-md-9 col-md-offset-2 h_menu4">
 				<nav class="navbar nav_bottom" role="navigation">
 
 					<!-- Brand and toggle get grouped for better mobile display -->
@@ -51,34 +52,38 @@
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
 						<ul class="nav navbar-nav nav_1">
-							<li><a class="color" (click)="redirectToHome()">Home</a></li>
+							<li><a class="color" routerLink="/">Home</a></li>
+							<li><a class="color" routerLink="/orders">Orders</a></li>
 						</ul>
+						<div class="input-group">
+							<div class="input-group-btn">
+								<select class="form-control" [(ngModel)]="searchCategory">
+									 <option value="">All categories</option>
+									<option *ngFor="let category of categories.source._value" [ngValue]="category._id">{{category.name}}</option>
+								</select>
+							</div>
+							<input type="text" class="form-control" [(ngModel)]="search" placeholder="Search for..." required>
+							<span (click)="searchProducts()" class="input-group-addon" id="sizing-addon2">
+								<span class="glyphicon glyphicon-search"></span>
+							</span>
+						</div>
+
 					</div>
 					<!-- /.navbar-collapse -->
 
 				</nav>
 			</div>
-			<div class="col-sm-5 search-right">
-				<ul class="heart">
-					<li>
-						<a class="play-icon popup-with-zoom-anim" href="#small-dialog">
-							<i class="glyphicon glyphicon-search"> </i>
-						</a>
-					</li>
-				</ul>
+			<div class="col-sm-12 col-md-1 search-right">
 				<div class="cart box_1">
-					<a (click)="redirectToCart()">
+					<a routerLink="/cart">
 						<h3>
 							<div class="total">
 								<span *ngIf="validation()" class="simpleCart_total">{{cart.source._value.length}} items</span>
 								<span *ngIf="!isLoggedIn()" class="simpleCart_total">0 items</span>
-
-								
 							</div>
 							<img src="./src/images/cart.png" alt="" /></h3>
 					</a>
 				</div>
-				<div class="clearfix"> </div>
 			</div>
 			<div class="clearfix"></div>
 		</div>

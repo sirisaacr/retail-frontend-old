@@ -1,0 +1,75 @@
+<div class="container container-spacer content-mid">
+    <div class="row">
+        <div class="col-md-3 product-bottom">
+            <!--discounts-->
+            <section class="sky-form">
+                <h4 class="cate">Discounts</h4>
+                <div class="row row1 scroll-pane">
+                    <div class="col col-4">
+                        <label class="checkbox">
+                            <input (click)="editDiscountFilter(31, 50)" type="checkbox" name="checkbox"><i></i>30% - 50%
+                        </label>
+                        <label class="checkbox">
+                            <input (click)="editDiscountFilter(16, 30)" type="checkbox" name="checkbox"><i></i>15% - 30%
+                        </label>
+                        <label class="checkbox">
+                            <input (click)="editDiscountFilter(0,  15)" type="checkbox" name="checkbox"><i></i>0% - 15%
+                        </label>
+                        <label class="checkbox">
+                            <input (click)="editDiscountFilter(51, 99)" type="checkbox" name="checkbox"><i></i>Over 50%
+                        </label>
+                    </div>
+                </div>
+            </section>
+            <!--categories-->
+            <section class="sky-form">
+                <h4 class="cate">Categories</h4>
+                <div class="row row1 scroll-pane">
+                    <div class="col col-4">
+                        <label *ngFor= "let category of categories.source._value" class="checkbox">
+                            <input (click)="editCategoryFilter(category._id)" type="checkbox" name="checkbox">
+                            <i></i>{{category.name}}
+                        </label>
+                    </div>
+                </div>
+            </section>
+            <!--style-->
+            <section class="sky-form">
+                <h4 class="cate">Style</h4>
+                <div class="row row1 scroll-pane">
+                    <div class="col col-4">
+                        <label class="checkbox">
+                            <input (click)="editStyleFilter('Man')" type="checkbox" name="checkbox"><i></i>Man
+                        </label>
+                        <label class="checkbox">
+                            <input (click)="editStyleFilter('Woman')" type="checkbox" name="checkbox"><i></i>Woman
+                        </label>
+                        <label class="checkbox">
+                            <input (click)="editStyleFilter('Kids')" type="checkbox" name="checkbox"><i></i>Kids
+                        </label>
+                    </div>
+                </div>
+            </section>
+            <!--state-->
+            <section class="sky-form">
+                <h4 class="cate">State</h4>
+                <div class="row row1 scroll-pane">
+                    <div class="col col-4">
+                        <label class="checkbox">
+                            <input (click)="editStateFilter('New')" type="checkbox" name="checkbox"><i></i>New
+                        </label>
+                        <label class="checkbox">
+                            <input (click)="editStateFilter('Used')" type="checkbox" name="checkbox"><i></i>Used
+                        </label>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="col-md-9">
+            <div class="mid-popular">
+                <my-item class="col-md-4" *ngFor="let item of searchedProducts.source._value;" [item]="item"></my-item>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container container-spacer-top">
     <div class="top-buffer col-md-12">
         <div class="col-md-5 grid">
             <carousel [interval]="Interval" [noWrap]="noWrapSlides">
@@ -53,7 +53,7 @@
                                     <div (click)="increaseQuantityOfTempBuy(i)" class="entry value-plus active">&nbsp;</div>
                                 </div>
                             </div>
-                            <div class="col-md-offset-3 col-md-4">
+                            <div [ngClass]="{'disabled': loading}" class="col-md-offset-3 col-md-4">
                                 <a (click)="addToCart(i)" class="add-to item_add hvr-skew-backward">Add to cart</a>
                             </div>
                         </div>

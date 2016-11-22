@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { ProductService }     from '../shared/services/product.service';
 import { UserService }     from '../shared/services/user.service';
@@ -14,6 +14,7 @@ import { Product, ProductAttribute }            from '../shared/models/product.m
 })
 export class ProductComponent {
 
+    loading = false;
     Interval:number = 5000;
     noWrapSlides:boolean = false;
     product: Product = {} as any;
@@ -25,7 +26,8 @@ export class ProductComponent {
     product_id: string;
 
 
-    constructor(private route: ActivatedRoute, 
+    constructor(private router: Router,
+                private route: ActivatedRoute, 
                 private productService: ProductService,
                 private cartService: CartService,
                 private userService: UserService) {
@@ -36,14 +38,18 @@ export class ProductComponent {
 
     ngOnInit(){
         const sc = this;
-        this.productService.getProduct(sc.product_id)
-                    .subscribe((result) => {
-                        if (result.success) {
-                            sc.initVariables(result.product);
-                        }
-                        else{
-                        }
-                    });
+        let tempProduct = this.productService.searchProduct(sc.product_id);
+        if(!tempProduct){
+            tempProduct = this.productService
+                                .getProduct(sc.product_id)
+                                .subscribe(data => {
+                                        sc.initVariables(data.product);  
+                                }, error => console.log('Could not search any products.'));
+        }
+        else{
+            sc.initVariables(tempProduct);  
+        }
+
     }
 
     initVariables(product: Product){
@@ -95,6 +101,7 @@ export class ProductComponent {
     }
 
     addToCart(index){
+        this.loading = true;
         if(this.userService.isLoggedIn()){      
             let product = this.tempBuy[index];
             let purchase = {
@@ -106,15 +113,15 @@ export class ProductComponent {
                             }
             };
             this.cartService.addToCart(purchase);
-                            // .subscribe((result) => {
-                            //     if(result.success){
-                            //         console.log("Added to cart");
-                            //     }
-                            //     else{
-                            //         console.log("err 1 ");
-                            //     }
-                            // });
-            
+            this.tempBuy[index].quantity = 0;   
+            setTimeout(() => 
+            {
+                this.loading = false;
+            },
+            1000);         
+        }
+        else{
+            //redirect to login
         }
     }
 

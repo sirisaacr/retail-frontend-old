@@ -1,10 +1,7 @@
 import { Injectable }                 from '@angular/core';
 import { Http, Headers, Response, RequestOptions }    from '@angular/http';
 import {Observable}                 from 'rxjs/Rx';
-
-//TESTING
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-//
 
 import { UserService }    from './user.service';
 
@@ -22,7 +19,6 @@ export class CartService {
         products: any[]
     };
     private _cart: BehaviorSubject<any[]>;
-    cart: Observable<any[]>
 
 
 
@@ -33,7 +29,6 @@ export class CartService {
         this.cart_id = '';
         this.dataStore = { products: [] };
         this._cart = <BehaviorSubject<any[]>>new BehaviorSubject([]);
-        this.cart = this._cart.asObservable();
     }   
 
     get products() {
@@ -52,32 +47,6 @@ export class CartService {
         }, error => console.log('Could not load products.'));
     }
 
-    // getCart(): Observable<any>{
-    //   const sc = this;
-    //   if(sc.cart._id == '' && this.unloopable){  
-    //     sc.unloopable = false;
-    //     //Crear un servicio q devuelva el carrito y sustituir el sig return
-    //     let token     = JSON.parse(localStorage.getItem('currentUser')).token;
-    //     let headers   = new Headers({ 'Authorization': `JWT ${token}` });
-    //     let options   = new RequestOptions({ headers });
-
-    //     return this.http
-    //                 .get(`${this.baseUrl}/getUserCart`, options)
-    //                 .map((response: Response) => {
-    //                     let success = response.json() && response.json().success;
-    //                     if (success) {
-    //                         sc.cart = response.json() && response.json().cart;
-    //                         return {success:true, cart: sc.cart};
-    //                     } 
-    //                     else {
-    //                         // return false to indicate failed
-    //                         let msg = response.json() && response.json().msg;
-    //                         return response;                            
-    //                     }
-    //                 });
-    //   }
-    // }
-
     getCartId(){
         return this.cart_id;
     }
@@ -89,8 +58,8 @@ export class CartService {
         const sc = this;
 
         this.http.post(`${this.baseUrl}/addToCart`, itemToAdd, options)
-                    .map(response => response.json()).subscribe(data => {
-
+                    .map(response => response.json())
+                    .subscribe(data => {
                         let tempStore = this.dataStore.products;//.push(data.products);
                         let flag = true;
                         for(let i = 0; i < tempStore.length; i++){
@@ -107,38 +76,29 @@ export class CartService {
 
                         this._cart.next(Object.assign({}, this.dataStore).products);
                     }, error => console.log('Could not create product.'));
-
-
-        // return this.http
-        //     .post(`${this.baseUrl}/addToCart`, itemToAdd, options)
-        //     .map((response: Response) => {
-        //         // 
-        //         let success = response.json() && response.json().success;
-        //         if (success) {
-        //             let updatedCartProduct = response.json() && response.json().updatedCartProduct;
-        //             console.log(updatedCartProduct);
-        //             sc.cart.products.push(updatedCartProduct);
-        //             return { success, updatedCartProduct };
-        //         } 
-        //         else {
-        //             // return false to indicate failed
-        //             let msg = response.json() && response.json().msg;
-        //             return { success, msg };
-        //         }
-        //     });
     }
 
+    removeFromCart(index){
+        let token     = JSON.parse(localStorage.getItem('currentUser')).token;
+        let headers   = new Headers({ 'Authorization': `JWT ${token}` });
+        let options   = new RequestOptions({ headers }); 
+        const sc = this;
 
+        let itemToRemove = { _id: this.dataStore.products[index]._id };
 
-    // getCartProductsLength(): Observable<any>{
-    //     return Observable.of({success:true, size: this.cart.products.length});
-    // }
+        this.http.post(`${this.baseUrl}/removeFromCart`, itemToRemove, options)
+                    .map(response => response.json()).subscribe(data => {
+                        if(data.success){
+                            this.dataStore.products.splice(index, 1);
+                            this._cart.next(Object.assign({}, this.dataStore).products);
+                        }
+                    }, error => console.log('Could not delete product.'));
+    }
 
     logout(){
         this.cart_id = '';
         this.dataStore = { products: [] };
         this._cart = <BehaviorSubject<any[]>>new BehaviorSubject([]);
-        this.cart = this._cart.asObservable();
     }
 
 }

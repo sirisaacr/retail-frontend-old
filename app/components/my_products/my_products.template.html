@@ -1,0 +1,8 @@
+<div class="container container-spacer content-mid">
+	<h3>My Created Items</h3>
+	<label class="line"></label>
+	<div class="mid-popular">
+		<my-own-item *ngFor="let item of products.source._value;" [item]="item"></my-own-item>
+		<div class="clearfix"></div>
+	</div>
+</div>

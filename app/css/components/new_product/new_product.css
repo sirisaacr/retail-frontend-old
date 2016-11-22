@@ -1,0 +1,41 @@
+.login-mail textarea {
+  font-size: 0.9em;
+  color: #999;
+  border: 0 none #FFF;
+  overflow: hidden;
+  outline: none;
+  resize: none;
+  width: 92.5%; }
+
+.attribute {
+  border: 1px solid #E9E9E9;
+  margin-bottom: 2em;
+  padding: 0.5em 1em; }
+
+.attribute-err {
+  border: 1px solid #F67777; }
+
+.attribute-err-secondary {
+  border: 1px solid #F67777;
+  border-left: none; }
+
+.attribute-nb {
+  border-right: none; }
+
+.attribute input[type="text"] {
+  border: none;
+  outline: none;
+  font-size: 0.9em;
+  color: #999;
+  width: 85%; }
+
+.attribute i {
+  color: #F67777;
+  font-size: 1em; }
+
+.hvr-skew-backward input[type="button"] {
+  background-color: transparent;
+  border: none; }
+
+.hvr-skew-backward input[type="file"] {
+  display: none; }

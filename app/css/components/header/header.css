@@ -1,0 +1,20 @@
+.container-spacer {
+  padding-bottom: 2em; }
+
+.container-spacer-top {
+  padding-top: 2em; }
+
+.input-group {
+  padding-top: 1em;
+  padding-left: 2em; }
+
+.input-group select {
+  min-width: 8.5em; }
+
+.input-group input {
+  min-width: 11em; }
+
+@media (max-width: 892px) {
+  .input-group {
+    padding-top: 1em;
+    padding-left: 1.6em; } }

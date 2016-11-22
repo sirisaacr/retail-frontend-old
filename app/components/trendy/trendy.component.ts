@@ -10,25 +10,15 @@ import { Product }            from '../shared/models/product.model';
   templateUrl   : 'app/components/trendy/trendy.template.html'
 })
 export class TrendyComponent {
-    trendyItems: Product[] = [];
-    error = '';
+    trendyItems: any;
 
     constructor(private productService: ProductService){
 
     }
 
     ngOnInit() {
-      const sc = this;
-      sc.productService.trending()
-                        .subscribe((result) => {
-                            if (result.success) {
-                              sc.trendyItems = result.trending;
-                            }
-                            else {
-                                // trending items failed
-                                sc.error = result.msg;
-                            }
-                          });
+      this.trendyItems = this.productService.trendy_products;
+      this.productService.getTrendyProducts();    
     }
   
  }
