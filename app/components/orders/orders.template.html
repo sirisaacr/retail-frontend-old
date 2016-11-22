@@ -12,9 +12,9 @@
                     </tr>
                     <tr *ngFor="let item of order.products; let j=index" class="cart-header" >
                             <td class="ring-in">
-                            <a class="at-in"><img src="{{item.p_picture}}" class="img-responsive" alt=""></a>
+                            <a routerLink="/product/{{item.p_id}}" class="at-in"><img src="{{item.p_picture}}" class="img-responsive" alt=""></a>
                             <div class="sed">
-                                <h5><a> {{item.p_name}} </a></h5>
+                                <h5><a routerLink="/product/{{item.p_id}}"> {{item.p_name}} </a></h5>
                                 <p> {{item.p_state}} {{item.p_color}} {{item.p_size}} for {{item.p_style }} </p>
 
                             </div>
