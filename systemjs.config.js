@@ -77,5 +77,3 @@ var config = {
 System.config(config);  
 
 })(this);
-
-

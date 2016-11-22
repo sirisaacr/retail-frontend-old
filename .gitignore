@@ -39,4 +39,8 @@ src
 
 # Transpiled files
 *.js.map
-*.js
+*.component.js
+*.service.js
+*.module.js
+*.routes.js
+main.js

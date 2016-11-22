@@ -60,4 +60,3 @@ gulp.task('bundle', function() {
 gulp.task('css', ['sass', 'cssMinfy']);
 
 gulp.task('build', ['ts', 'bundle']);
-
